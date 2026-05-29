@@ -1,0 +1,51 @@
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.vscode-shared/
+
+# Claude
+.claude/
+.claude.json
+.cc-switch/
+
+# Windows user folders
+AppData/
+Contacts/
+Cookies/
+Desktop/
+Documents/
+Downloads/
+Favorites/
+Links/
+Local Settings/
+Music/
+My Documents/
+NetHood/
+OneDrive/
+Pictures/
+PrintHood/
+Recent/
+Saved Games/
+Searches/
+SendTo/
+Templates/
+Videos/
+「开始」菜单/
+WPS Cloud Files/
+WPSDrive/
+xwechat_files/
+.local/
+
+# Windows system files
+NTUSER.DAT*
+ntuser.dat.*
+ntuser.ini
+.node_repl_history
+
+# Old reference images
+images/slide-01.png
+images/slide-02.png

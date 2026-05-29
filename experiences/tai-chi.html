@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tai Chi — Lived in China</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','Noto Sans SC','Helvetica','sans-serif']},colors:{warm:{50:'#faf8f5',100:'#f5f0e8',200:'#ebe0d0',300:'#d4c4ab',400:'#b8a388',500:'#9c8469',600:'#7d6a54',700:'#655545',800:'#4a3f34',900:'#2d2620'}}}}}}</script>
+<style>
+  html{scroll-behavior:smooth}body{font-feature-settings:'ss01','ss02'}
+  .nav-blur{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease-out,transform .8s ease-out}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  .city-dropdown{opacity:0;visibility:hidden;transform:translateY(-8px);transition:all .25s ease}
+  .cities-trigger:hover .city-dropdown,.city-dropdown:hover{opacity:1;visibility:visible;transform:translateY(0)}
+  .hero-img{filter:brightness(0.92) contrast(1.04) saturate(0.85)}
+</style>
+</head>
+<body class="bg-warm-50 text-warm-800 font-sans font-light antialiased">
+
+<nav class="fixed top-0 left-0 right-0 z-50 nav-blur bg-warm-50/70 border-b border-warm-200/40">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="../index.html" class="text-lg font-normal tracking-wide text-warm-800">Lived in China</a>
+    <div class="hidden md:flex items-center gap-8 text-sm tracking-wider">
+      <a href="../index.html" class="text-warm-700 hover:text-warm-500 transition-colors">Home</a>
+      <div class="cities-trigger relative">
+        <span class="text-warm-700 hover:text-warm-500 transition-colors cursor-pointer">Cities</span>
+        <div class="city-dropdown absolute top-full left-1/2 -translate-x-1/2 pt-4">
+          <div class="bg-warm-50/95 nav-blur border border-warm-200/40 rounded-sm py-2 px-6 whitespace-nowrap shadow-sm">
+            <a href="../cities/beijing.html" class="block py-2 text-warm-600 hover:text-warm-800 text-xs tracking-wider">Beijing</a>
+            <a href="../cities/shanghai.html" class="block py-2 text-warm-600 hover:text-warm-800 text-xs tracking-wider">Shanghai</a>
+            <a href="../cities/chengdu.html" class="block py-2 text-warm-600 hover:text-warm-800 text-xs tracking-wider">Chengdu</a>
+            <a href="../cities/hangzhou.html" class="block py-2 text-warm-600 hover:text-warm-800 text-xs tracking-wider">Hangzhou</a>
+            <a href="../cities/shenzhen.html" class="block py-2 text-warm-600 hover:text-warm-800 text-xs tracking-wider">Shenzhen</a>
+          </div>
+        </div>
+      </div>
+      <a href="index.html" class="text-warm-700 hover:text-warm-500 transition-colors">Experiences</a>
+      <a href="../index.html#about" class="text-warm-700 hover:text-warm-500 transition-colors">About</a>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden text-warm-700">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="md:hidden hidden border-t border-warm-200/40 bg-warm-50/95 nav-blur">
+    <div class="px-6 py-4 flex flex-col gap-3 text-sm tracking-wider">
+      <a href="../index.html" class="text-warm-700">Home</a>
+      <a href="../cities/beijing.html" class="text-warm-700">Beijing</a>
+      <a href="../cities/shanghai.html" class="text-warm-700">Shanghai</a>
+      <a href="../cities/chengdu.html" class="text-warm-700">Chengdu</a>
+      <a href="../cities/hangzhou.html" class="text-warm-700">Hangzhou</a>
+      <a href="../cities/shenzhen.html" class="text-warm-700">Shenzhen</a>
+      <a href="index.html" class="text-warm-700">Experiences</a>
+      <a href="../index.html#about" class="text-warm-700">About</a>
+    </div>
+  </div>
+</nav>
+
+<section class="relative h-[60vh] w-full overflow-hidden mt-16">
+  <div class="absolute inset-0 bg-warm-900/25 z-10"></div>
+  <img src="../images/hero-03.jpg"
+       class="hero-img absolute inset-0 w-full h-full object-cover"
+       alt="Tai Chi — morning practice, courtyard, slow movement">
+  <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-6">
+    <p class="text-white/60 text-xs tracking-[0.2em] uppercase mb-4">Beijing</p>
+    <h1 class="text-white text-3xl md:text-5xl font-light tracking-wide mb-3">Tai Chi</h1>
+    <p class="text-white/65 text-lg font-light italic">"Slow movement, steady breath, morning calm."</p>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-6 py-20 md:py-28">
+  <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-16">
+    <div><p class="text-xs text-warm-500 tracking-[0.2em] uppercase mb-2">Duration</p><p class="text-warm-700 text-sm">1&ndash;2 hours, early morning</p></div>
+    <div><p class="text-xs text-warm-500 tracking-[0.2em] uppercase mb-2">Group size</p><p class="text-warm-700 text-sm">Private, up to 4 people</p></div>
+    <div><p class="text-xs text-warm-500 tracking-[0.2em] uppercase mb-2">Host</p><p class="text-warm-700 text-sm">A tai chi practitioner</p></div>
+  </div>
+  <div class="reveal space-y-8 text-warm-600 leading-relaxed">
+    <div>
+      <h2 class="text-lg font-normal tracking-wide text-warm-800 mb-4">About this experience</h2>
+      <p class="text-base font-light">Begin your morning in a quiet Beijing courtyard with a practicing tai chi master. You'll learn the foundational movements of this ancient practice — not in a class, but in the same courtyard where locals gather each morning. Slow your breath, feel the ground beneath you, and experience the calm rhythm that has anchored Chinese mornings for centuries.</p>
+    </div>
+    <div>
+      <h2 class="text-lg font-normal tracking-wide text-warm-800 mb-4">What you'll do</h2>
+      <ul class="text-base font-light space-y-3 list-disc list-inside">
+        <li>Join a morning tai chi session in a traditional Beijing courtyard</li>
+        <li>Learn basic movements and breathing techniques</li>
+        <li>Understand the philosophy behind the practice</li>
+        <li>Share tea and conversation with your host afterward</li>
+      </ul>
+    </div>
+  </div>
+  <div class="reveal text-center mt-20">
+    <p class="text-sm text-warm-500 tracking-wide mb-6">Interested in this experience?</p>
+    <a href="../index.html#contact" class="px-8 py-3 border border-warm-300 text-warm-600 text-sm tracking-widest uppercase hover:bg-warm-100 transition-colors duration-500 rounded-sm">Get in touch</a>
+  </div>
+</section>
+
+<footer class="border-t border-warm-200 py-12 text-center">
+  <p class="text-sm text-warm-500 tracking-wide mb-1">Lived in China</p>
+  <p class="text-xs text-warm-400 tracking-wider">Curated local experiences, crafted by locals.</p>
+</footer>
+
+<script>
+document.getElementById('mobile-menu-btn').addEventListener('click',function(){document.getElementById('mobile-menu').classList.toggle('hidden')});
+var obs=new IntersectionObserver(function(e){e.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+</script>
+</body>
+</html>

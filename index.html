@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lived in China — Curated Local Experiences</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'Noto Sans SC', 'Helvetica', 'sans-serif'],
+        },
+        colors: {
+          warm: {
+            50: '#faf8f5',
+            100: '#f5f0e8',
+            200: '#ebe0d0',
+            300: '#d4c4ab',
+            400: '#b8a388',
+            500: '#9c8469',
+            600: '#7d6a54',
+            700: '#655545',
+            800: '#4a3f34',
+            900: '#2d2620',
+          }
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-feature-settings: 'ss01', 'ss02'; }
+
+  .slide { opacity: 0; transition: opacity 1.6s ease-in-out; }
+  .slide.active { opacity: 1; }
+
+  .dot { transition: all 0.6s ease; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .card-img { transition: transform 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+  .card-group:hover .card-img { transform: scale(1.03); }
+
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  .hero-img { filter: brightness(0.92) contrast(1.04) saturate(0.85); }
+
+  .nav-blur {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .city-dropdown { opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all 0.25s ease; }
+  .cities-trigger:hover .city-dropdown,
+  .city-dropdown:hover { opacity: 1; visibility: visible; transform: translateY(0); }
+
+</style>
+</head>
+<body class="bg-warm-50 text-warm-800 font-sans font-light antialiased">
+
+<!-- ============================================================
+  VISUAL DIRECTION: 东方克制美学 (Eastern Restrained Aesthetics)
+  calm / documentary / muted / editorial
+  No tourist shots, no cliché China aesthetic, no plastic textures
+============================================================ -->
+
+<!-- STICKY NAVIGATION -->
+<nav class="fixed top-0 left-0 right-0 z-50 nav-blur bg-warm-50/70 border-b border-warm-200/40">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#" class="text-lg font-normal tracking-wide text-warm-800">
+      Lived in China
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm tracking-wider">
+      <a href="#" class="text-warm-800 hover:text-warm-500 transition-colors">Home</a>
+      <div class="cities-trigger relative">
+        <span class="text-warm-700 hover:text-warm-500 transition-colors cursor-pointer">Cities</span>
+        <div class="city-dropdown absolute top-full left-1/2 -translate-x-1/2 pt-4">
+          <div class="bg-warm-50/95 nav-blur border border-warm-200/40 rounded-sm py-2 px-6 whitespace-nowrap shadow-sm">
+            <a href="cities/beijing.html" class="block py-2 text-warm-600 hover:text-warm-800 transition-colors text-xs tracking-wider">Beijing</a>
+            <a href="cities/shanghai.html" class="block py-2 text-warm-600 hover:text-warm-800 transition-colors text-xs tracking-wider">Shanghai</a>
+            <a href="cities/chengdu.html" class="block py-2 text-warm-600 hover:text-warm-800 transition-colors text-xs tracking-wider">Chengdu</a>
+            <a href="cities/hangzhou.html" class="block py-2 text-warm-600 hover:text-warm-800 transition-colors text-xs tracking-wider">Hangzhou</a>
+            <a href="cities/shenzhen.html" class="block py-2 text-warm-600 hover:text-warm-800 transition-colors text-xs tracking-wider">Shenzhen</a>
+          </div>
+        </div>
+      </div>
+      <a href="experiences/index.html" class="text-warm-700 hover:text-warm-500 transition-colors">Experiences</a>
+      <a href="#about" class="text-warm-700 hover:text-warm-500 transition-colors">About</a>
+    </div>
+    <button id="mobile-menu-btn" class="md:hidden text-warm-700">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="md:hidden hidden border-t border-warm-200/40 bg-warm-50/95 nav-blur">
+    <div class="px-6 py-4 flex flex-col gap-3 text-sm tracking-wider">
+      <a href="#" class="text-warm-700">Home</a>
+      <a href="cities/beijing.html" class="text-warm-700">Beijing</a>
+      <a href="cities/shanghai.html" class="text-warm-700">Shanghai</a>
+      <a href="cities/chengdu.html" class="text-warm-700">Chengdu</a>
+      <a href="cities/hangzhou.html" class="text-warm-700">Hangzhou</a>
+      <a href="cities/shenzhen.html" class="text-warm-700">Shenzhen</a>
+      <a href="experiences/index.html" class="text-warm-700">Experiences</a>
+      <a href="#about" class="text-warm-700">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+  HERO CAROUSEL
+  Images: hero-01 → hero-05 (local production images only)
+  Overlay: subtle left-to-right gradient for text legibility
+  Height: 72vh mobile / 80vh tablet / 100vh desktop (min 760px)
+============================================================ -->
+<section class="relative h-[72vh] md:h-[80vh] lg:h-screen lg:min-h-[760px] w-full overflow-hidden">
+  <div class="absolute inset-0 z-10 bg-gradient-to-r from-warm-900/30 via-warm-900/8 to-transparent"></div>
+
+  <div id="hero-slider" class="absolute inset-0">
+    <div class="slide active absolute inset-0">
+      <img src="images/hero-01.jpg"
+           class="absolute inset-0 w-full h-full object-cover"
+           alt="Hero slide 1"
+           loading="eager">
+    </div>
+    <div class="slide absolute inset-0">
+      <img src="images/hero-02.jpg"
+           class="absolute inset-0 w-full h-full object-cover"
+           alt="Hero slide 2"
+           loading="lazy">
+    </div>
+    <div class="slide absolute inset-0">
+      <img src="images/hero-03.jpg"
+           class="absolute inset-0 w-full h-full object-cover"
+           alt="Hero slide 3"
+           loading="lazy">
+    </div>
+    <div class="slide absolute inset-0">
+      <img src="images/hero-04.jpg"
+           class="absolute inset-0 w-full h-full object-cover"
+           alt="Hero slide 4"
+           loading="lazy">
+    </div>
+    <div class="slide absolute inset-0">
+      <img src="images/hero-05.jpg"
+           class="absolute inset-0 w-full h-full object-cover"
+           alt="Hero slide 5"
+           loading="lazy">
+    </div>
+  </div>
+
+  <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-6">
+    <h1 class="text-white text-4xl md:text-6xl lg:text-7xl font-light tracking-wide mb-6 leading-tight">
+      Experience China through real life.
+    </h1>
+    <p class="text-white/65 text-lg md:text-xl font-light mb-12 tracking-wider">
+      Slow experiences. Real places. Human moments.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a href="#cities" class="px-10 py-3 border border-white/35 text-white text-sm tracking-widest uppercase hover:bg-white/8 transition-colors duration-500">Explore Cities</a>
+      <a href="#experiences" class="px-10 py-3 border border-white/35 text-white text-sm tracking-widest uppercase hover:bg-white/8 transition-colors duration-500">View Experiences</a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+    <span class="dot w-1.5 h-1.5 rounded-full bg-white cursor-pointer" data-index="0"></span>
+    <span class="dot w-1.5 h-1.5 rounded-full bg-white/35 cursor-pointer" data-index="1"></span>
+    <span class="dot w-1.5 h-1.5 rounded-full bg-white/35 cursor-pointer" data-index="2"></span>
+    <span class="dot w-1.5 h-1.5 rounded-full bg-white/35 cursor-pointer" data-index="3"></span>
+    <span class="dot w-1.5 h-1.5 rounded-full bg-white/35 cursor-pointer" data-index="4"></span>
+  </div>
+</section>
+
+<!-- ============================================================
+  EXPLORE BY CITY
+  Left intro (220px) + right horizontal city cards (240×150, gap 20px)
+============================================================ -->
+<section id="cities" class="max-w-[1280px] mx-auto px-5 md:px-12 pt-12 pb-0">
+  <div class="flex flex-col md:flex-row gap-6 md:gap-10">
+    <div class="reveal flex-shrink-0 md:w-[220px] flex flex-col justify-start md:pt-1">
+      <p class="text-[10px] text-warm-500 tracking-[0.2em] uppercase mb-3">Explore by city</p>
+      <h2 class="text-xl md:text-2xl font-light tracking-wide mb-2 leading-tight text-warm-800">Explore by city</h2>
+      <p class="text-sm text-warm-500 font-light leading-relaxed mb-4">Beijing, Shanghai, Chongqing and beyond.</p>
+      <a href="#cities" class="hidden md:inline-block text-xs text-warm-500 tracking-widest uppercase border-b border-warm-300 pb-1 hover:text-warm-700 hover:border-warm-500 transition-colors duration-500 w-fit">View all cities</a>
+    </div>
+    <div class="flex-1 overflow-x-auto scrollbar-hide -mr-5 md:-mr-12">
+      <div class="flex gap-5 flex-nowrap min-w-min pb-1">
+        <a href="cities/beijing.html" class="reveal card-group flex-shrink-0 w-[220px] md:w-[220px] lg:w-[240px] h-[150px] rounded-lg overflow-hidden relative bg-warm-200">
+          <img src="images/beijing.png" class="absolute inset-0 w-full h-full object-cover" alt="Beijing" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-warm-900/70 via-warm-900/20 to-transparent"></div>
+          <div class="absolute bottom-3 left-4 right-4">
+            <span class="text-white text-sm font-normal tracking-wider block leading-tight">Beijing</span>
+            <span class="text-white/65 text-[11px] font-light tracking-wide block leading-tight mt-0.5">Hutongs &middot; Tai Chi &middot; Culture</span>
+          </div>
+        </a>
+        <a href="cities/shanghai.html" class="reveal card-group flex-shrink-0 w-[220px] md:w-[220px] lg:w-[240px] h-[150px] rounded-lg overflow-hidden relative bg-warm-200">
+          <img src="images/shanghai.png" class="absolute inset-0 w-full h-full object-cover" alt="Shanghai" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-warm-900/70 via-warm-900/20 to-transparent"></div>
+          <div class="absolute bottom-3 left-4 right-4">
+            <span class="text-white text-sm font-normal tracking-wider block leading-tight">Shanghai</span>
+            <span class="text-white/65 text-[11px] font-light tracking-wide block leading-tight mt-0.5">Modern Life &middot; Art &middot; Caf&eacute;s</span>
+          </div>
+        </a>
+        <a href="cities/chongqing.html" class="reveal card-group flex-shrink-0 w-[220px] md:w-[220px] lg:w-[240px] h-[150px] rounded-lg overflow-hidden relative bg-warm-200">
+          <img src="images/chongqing.png" class="absolute inset-0 w-full h-full object-cover" alt="Chongqing" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-warm-900/70 via-warm-900/20 to-transparent"></div>
+          <div class="absolute bottom-3 left-4 right-4">
+            <span class="text-white text-sm font-normal tracking-wider block leading-tight">Chongqing</span>
+            <span class="text-white/65 text-[11px] font-light tracking-wide block leading-tight mt-0.5">Mountain City &middot; Food &middot; Night Walks</span>
+          </div>
+        </a>
+        <a href="cities/shenzhen.html" class="reveal card-group flex-shrink-0 w-[220px] md:w-[220px] lg:w-[240px] h-[150px] rounded-lg overflow-hidden relative bg-warm-200">
+          <img src="images/shenzhen.png" class="absolute inset-0 w-full h-full object-cover" alt="Shenzhen" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-warm-900/70 via-warm-900/20 to-transparent"></div>
+          <div class="absolute bottom-3 left-4 right-4">
+            <span class="text-white text-sm font-normal tracking-wider block leading-tight">Shenzhen</span>
+            <span class="text-white/65 text-[11px] font-light tracking-wide block leading-tight mt-0.5">Design &middot; Coast &middot; Urban Life</span>
+          </div>
+        </a>
+        <a href="cities/chengdu.html" class="reveal card-group flex-shrink-0 w-[220px] md:w-[220px] lg:w-[240px] h-[150px] rounded-lg overflow-hidden relative bg-warm-200">
+          <img src="images/chengdu.png" class="absolute inset-0 w-full h-full object-cover" alt="Chengdu" loading="lazy">
+          <div class="absolute inset-0 bg-gradient-to-t from-warm-900/70 via-warm-900/20 to-transparent"></div>
+          <div class="absolute bottom-3 left-4 right-4">
+            <span class="text-white text-sm font-normal tracking-wider block leading-tight">Chengdu</span>
+            <span class="text-white/65 text-[11px] font-light tracking-wide block leading-tight mt-0.5">Tea &middot; Food &middot; Slow Life</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <a href="#cities" class="md:hidden text-xs text-warm-500 tracking-widest uppercase border-b border-warm-300 pb-1 hover:text-warm-700 w-fit">View all cities</a>
+  </div>
+</section>
+
+<!-- ============================================================
+  FEATURED EXPERIENCES
+  Left intro (220px) + right horizontal cards (260×360, gap 24px)
+============================================================ -->
+<section id="experiences" class="max-w-[1280px] mx-auto px-5 md:px-12 pt-10 pb-14">
+  <div class="flex flex-col md:flex-row gap-6 md:gap-10">
+    <div class="reveal flex-shrink-0 md:w-[220px] flex flex-col justify-start md:pt-1">
+      <p class="text-[10px] text-warm-500 tracking-[0.2em] uppercase mb-3">Featured Experiences</p>
+      <h2 class="text-xl md:text-2xl font-light tracking-wide mb-2 leading-tight text-warm-800">Featured experiences</h2>
+      <p class="text-sm text-warm-500 font-light leading-relaxed mb-4">Handpicked local moments.</p>
+      <a href="experiences/index.html" class="hidden md:inline-flex items-center gap-1 text-xs text-warm-500 tracking-widest uppercase border-b border-warm-300 pb-1 hover:text-warm-700 hover:border-warm-500 transition-colors duration-500 w-fit">View all experiences <span class="text-base leading-none">&rarr;</span></a>
+    </div>
+    <div class="flex-1 overflow-x-auto scrollbar-hide -mr-5 md:-mr-12">
+      <div class="flex gap-6 flex-nowrap min-w-min pb-1">
+        <!-- Tea Ceremony -->
+        <a href="experiences/tea-ceremony.html" class="reveal card-group flex-shrink-0 w-[260px] rounded-lg overflow-hidden bg-white border border-warm-200/60 flex flex-col">
+          <div class="h-[180px] overflow-hidden bg-warm-100 flex-shrink-0">
+            <img src="images/tea ceremony.png" class="card-img w-full h-full object-cover" alt="Tea ceremony" loading="lazy">
+          </div>
+          <div class="flex flex-col justify-between px-5 py-4 flex-1">
+            <div>
+              <p class="text-[10px] text-warm-400 tracking-[0.15em] uppercase mb-2">Hangzhou &middot; Chengdu</p>
+              <h3 class="text-base font-normal tracking-wide text-warm-800 mb-1">Tea Ceremony</h3>
+              <p class="text-warm-500 text-xs font-light leading-relaxed line-clamp-2">"Warm steam, quiet hands, slow conversation."</p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-warm-100">
+              <span class="text-xs text-warm-500 font-light">2&ndash;3 hrs</span>
+              <span class="text-xs text-warm-700 font-normal">From &yen;380</span>
+            </div>
+          </div>
+        </a>
+        <!-- Indigo Dyeing -->
+        <a href="experiences/indigo-dye.html" class="reveal card-group flex-shrink-0 w-[260px] rounded-lg overflow-hidden bg-white border border-warm-200/60 flex flex-col">
+          <div class="h-[180px] overflow-hidden bg-warm-100 flex-shrink-0">
+            <img src="images/indigo dyeing.png" class="card-img w-full h-full object-cover" alt="Indigo dyeing" loading="lazy">
+          </div>
+          <div class="flex flex-col justify-between px-5 py-4 flex-1">
+            <div>
+              <p class="text-[10px] text-warm-400 tracking-[0.15em] uppercase mb-2">Jiangnan &middot; Dali</p>
+              <h3 class="text-base font-normal tracking-wide text-warm-800 mb-1">Indigo Dyeing</h3>
+              <p class="text-warm-500 text-xs font-light leading-relaxed line-clamp-2">"Blue-stained hands, slow fabric, patient time."</p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-warm-100">
+              <span class="text-xs text-warm-500 font-light">3&ndash;4 hrs</span>
+              <span class="text-xs text-warm-700 font-normal">From &yen;420</span>
+            </div>
+          </div>
+        </a>
+        <!-- Tai Chi -->
+        <a href="experiences/tai-chi.html" class="reveal card-group flex-shrink-0 w-[260px] rounded-lg overflow-hidden bg-white border border-warm-200/60 flex flex-col">
+          <div class="h-[180px] overflow-hidden bg-warm-100 flex-shrink-0">
+            <img src="images/Tai chi.png" class="card-img w-full h-full object-cover" alt="Tai Chi" loading="lazy">
+          </div>
+          <div class="flex flex-col justify-between px-5 py-4 flex-1">
+            <div>
+              <p class="text-[10px] text-warm-400 tracking-[0.15em] uppercase mb-2">Beijing</p>
+              <h3 class="text-base font-normal tracking-wide text-warm-800 mb-1">Tai Chi</h3>
+              <p class="text-warm-500 text-xs font-light leading-relaxed line-clamp-2">"Slow movement, steady breath, morning calm."</p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-warm-100">
+              <span class="text-xs text-warm-500 font-light">1&ndash;2 hrs</span>
+              <span class="text-xs text-warm-700 font-normal">From &yen;220</span>
+            </div>
+          </div>
+        </a>
+        <!-- Cooking -->
+        <a href="experiences/home-cooking.html" class="reveal card-group flex-shrink-0 w-[260px] rounded-lg overflow-hidden bg-white border border-warm-200/60 flex flex-col">
+          <div class="h-[180px] overflow-hidden bg-warm-100 flex-shrink-0">
+            <img src="images/cooking.png" class="card-img w-full h-full object-cover" alt="Cooking" loading="lazy">
+          </div>
+          <div class="flex flex-col justify-between px-5 py-4 flex-1">
+            <div>
+              <p class="text-[10px] text-warm-400 tracking-[0.15em] uppercase mb-2">Beijing &middot; Chengdu</p>
+              <h3 class="text-base font-normal tracking-wide text-warm-800 mb-1">Cooking</h3>
+              <p class="text-warm-500 text-xs font-light leading-relaxed line-clamp-2">"A kitchen, a family, a recipe passed down."</p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-warm-100">
+              <span class="text-xs text-warm-500 font-light">3&ndash;4 hrs</span>
+              <span class="text-xs text-warm-700 font-normal">From &yen;280</span>
+            </div>
+          </div>
+        </a>
+        <!-- Hidden City Walk -->
+        <a href="experiences/hutong-walk.html" class="reveal card-group flex-shrink-0 w-[260px] rounded-lg overflow-hidden bg-white border border-warm-200/60 flex flex-col">
+          <div class="h-[180px] overflow-hidden bg-warm-100 flex-shrink-0">
+            <img src="images/Hidden city walk.png" class="card-img w-full h-full object-cover" alt="Hidden City Walk" loading="lazy">
+          </div>
+          <div class="flex flex-col justify-between px-5 py-4 flex-1">
+            <div>
+              <p class="text-[10px] text-warm-400 tracking-[0.15em] uppercase mb-2">Beijing</p>
+              <h3 class="text-base font-normal tracking-wide text-warm-800 mb-1">Hidden City Walk</h3>
+              <p class="text-warm-500 text-xs font-light leading-relaxed line-clamp-2">"Alley shadows, breakfast steam, old Beijing waking up."</p>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-warm-100">
+              <span class="text-xs text-warm-500 font-light">2&ndash;3 hrs</span>
+              <span class="text-xs text-warm-700 font-normal">From &yen;260</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <a href="experiences/index.html" class="md:hidden flex items-center gap-1 text-xs text-warm-500 tracking-widest uppercase border-b border-warm-300 pb-1 hover:text-warm-700 w-fit">View all experiences <span class="text-base leading-none">&rarr;</span></a>
+  </div>
+</section>
+
+<!-- ============================================================
+  PHILOSOPHY
+  Visual rule: text-first, editorial, restrained
+============================================================ -->
+<section id="about" class="bg-warm-100 py-16 md:py-20">
+  <div class="max-w-2xl mx-auto px-6 text-center">
+    <div class="reveal">
+      <p class="text-xs text-warm-500 tracking-[0.2em] uppercase mb-6">Our philosophy</p>
+      <h2 class="text-2xl md:text-4xl font-light tracking-wide mb-10 leading-tight">
+        A different way to experience China
+      </h2>
+      <p class="text-warm-600 text-base md:text-lg font-light leading-relaxed max-w-xl mx-auto">
+        We design experiences around three principles: warmth, depth, reality.
+        Warmth comes from people, not systems.
+        Depth comes from time, not sightseeing.
+        Reality comes from life, not staging.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<section class="max-w-4xl mx-auto px-6 py-12 md:py-16">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+    <div class="reveal">
+      <div class="text-warm-400 mb-3">
+        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+        </svg>
+      </div>
+      <p class="text-sm tracking-[0.15em] uppercase text-warm-600 mb-2">Local hosts</p>
+      <p class="text-xs text-warm-500 font-light">Real people, real stories, real homes.</p>
+    </div>
+    <div class="reveal">
+      <div class="text-warm-400 mb-3">
+        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+        </svg>
+      </div>
+      <p class="text-sm tracking-[0.15em] uppercase text-warm-600 mb-2">Private experiences</p>
+      <p class="text-xs text-warm-500 font-light">No crowds, no flags, just the moment.</p>
+    </div>
+    <div class="reveal">
+      <div class="text-warm-400 mb-3">
+        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+        </svg>
+      </div>
+      <p class="text-sm tracking-[0.15em] uppercase text-warm-600 mb-2">Curated routes</p>
+      <p class="text-xs text-warm-500 font-light">Every experience hand-picked and tested.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="max-w-3xl mx-auto px-6 py-24 md:py-36 text-center">
+  <div class="reveal">
+    <p class="text-xs text-warm-500 tracking-[0.2em] uppercase mb-6">Get in touch</p>
+    <h2 class="text-2xl md:text-4xl font-light tracking-wide mb-4 leading-tight">
+      Tell us what kind of China<br>you want to experience.
+    </h2>
+    <p class="text-warm-500 text-base font-light tracking-wide mb-16">We'll design something personal for you.</p>
+
+    <div class="flex flex-col items-center gap-5">
+      <a href="https://wa.me/YOUR_NUMBER" target="_blank" rel="noopener"
+         class="group w-full max-w-xs border border-warm-300 py-4 px-8 text-warm-700 hover:bg-warm-100 transition-colors duration-500 flex items-center justify-center gap-4 rounded-sm">
+        <svg class="w-4 h-4 text-warm-500" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span class="text-sm tracking-[0.2em] uppercase">WhatsApp</span>
+      </a>
+
+      <a href="https://instagram.com/YOUR_USERNAME" target="_blank" rel="noopener"
+         class="group w-full max-w-xs border border-warm-300 py-4 px-8 text-warm-700 hover:bg-warm-100 transition-colors duration-500 flex items-center justify-center gap-4 rounded-sm">
+        <svg class="w-4 h-4 text-warm-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        <span class="text-sm tracking-[0.2em] uppercase">Instagram</span>
+      </a>
+
+      <div class="w-full max-w-xs border border-warm-300 py-4 px-8 text-warm-700 rounded-sm">
+        <div class="flex items-center justify-center gap-4 mb-1">
+          <svg class="w-4 h-4 text-warm-500" fill="currentColor" viewBox="0 0 24 24"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z"/></svg>
+          <span class="text-sm tracking-[0.2em] uppercase">WeChat</span>
+        </div>
+        <p class="text-xs text-warm-400 font-light tracking-wide">Available for coordination in China.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="border-t border-warm-200 py-12 text-center">
+  <p class="text-sm text-warm-500 tracking-wide mb-1">Lived in China</p>
+  <p class="text-xs text-warm-400 tracking-wider">Curated local experiences, crafted by locals.</p>
+</footer>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  let current = 0;
+  const total = slides.length;
+  let interval;
+
+  function goTo(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('bg-white');
+    dots[current].classList.add('bg-white/35');
+
+    current = index;
+
+    slides[current].classList.add('active');
+    dots[current].classList.remove('bg-white/35');
+    dots[current].classList.add('bg-white');
+  }
+
+  function next() {
+    goTo((current + 1) % total);
+  }
+
+  interval = setInterval(next, 5500);
+
+  dots.forEach(function(dot) {
+    dot.addEventListener('click', function() {
+      goTo(parseInt(this.getAttribute('data-index')));
+      clearInterval(interval);
+      interval = setInterval(next, 5500);
+    });
+  });
+
+  document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+    document.getElementById('mobile-menu').classList.toggle('hidden');
+  });
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+})();
+</script>
+
+</body>
+</html>
