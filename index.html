@@ -123,37 +123,57 @@
   Overlay: subtle left-to-right gradient for text legibility
   Height: 72vh mobile / 80vh tablet / 100vh desktop (min 760px)
 ============================================================ -->
-<section class="relative h-screen md:h-[80vh] lg:h-screen lg:min-h-[760px] w-full overflow-hidden">
+<section class="relative h-[100svh] md:h-[80vh] lg:h-screen lg:min-h-[760px] w-full overflow-hidden">
   <div class="absolute inset-0 z-10 bg-gradient-to-r from-warm-900/30 via-warm-900/8 to-transparent"></div>
 
   <div id="hero-slider" class="absolute inset-0">
     <div class="slide active absolute inset-0">
       <img src="images/hero-01.jpg"
-           class="absolute inset-0 w-full h-full object-cover"
+           class="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
+           alt="Hero slide 1"
+           loading="eager">
+      <img src="images/hero-mobile/01.jpg"
+           class="absolute inset-0 w-full h-full object-cover object-center md:hidden"
            alt="Hero slide 1"
            loading="eager">
     </div>
     <div class="slide absolute inset-0">
       <img src="images/hero-02.jpg"
-           class="absolute inset-0 w-full h-full object-cover"
+           class="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
+           alt="Hero slide 2"
+           loading="lazy">
+      <img src="images/hero-mobile/02.png"
+           class="absolute inset-0 w-full h-full object-cover object-center md:hidden"
            alt="Hero slide 2"
            loading="lazy">
     </div>
     <div class="slide absolute inset-0">
       <img src="images/hero-03.jpg"
-           class="absolute inset-0 w-full h-full object-cover"
+           class="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
+           alt="Hero slide 3"
+           loading="lazy">
+      <img src="images/hero-mobile/03.jpg"
+           class="absolute inset-0 w-full h-full object-cover object-center md:hidden"
            alt="Hero slide 3"
            loading="lazy">
     </div>
     <div class="slide absolute inset-0">
       <img src="images/hero-04.jpg"
-           class="absolute inset-0 w-full h-full object-cover"
+           class="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
+           alt="Hero slide 4"
+           loading="lazy">
+      <img src="images/hero-mobile/04.png"
+           class="absolute inset-0 w-full h-full object-cover object-center md:hidden"
            alt="Hero slide 4"
            loading="lazy">
     </div>
     <div class="slide absolute inset-0">
       <img src="images/hero-05.jpg"
-           class="absolute inset-0 w-full h-full object-cover"
+           class="absolute inset-0 w-full h-full object-cover object-center hidden md:block"
+           alt="Hero slide 5"
+           loading="lazy">
+      <img src="images/hero-mobile/05.png"
+           class="absolute inset-0 w-full h-full object-cover object-center md:hidden"
            alt="Hero slide 5"
            loading="lazy">
     </div>
